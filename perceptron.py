@@ -80,11 +80,14 @@ train_data = [
     # 9   |b |        |        |       |
     array([1, 1, 0, 1, 0, 1, 0, 0, 0, 0]),
     # 10  |b |        |        |       |
-    array([1, 0, 0, 0, 0, 1, 0, 1, 0, 1]),
+    array([1, 0, 0, 1, 0, 1, 0, 0, 0, 1]),
 ]
+
+train_data = array(train_data)
+# train_data[train_data > 0] = 255
 
 if __name__ == "__main__":
     # Class takes arguments in range [0-9]
-    p = Perceptron(7, 5)
+    p = Perceptron(8, 9)
     p.train(train_data)
     p.test(train_data)
