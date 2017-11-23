@@ -33,15 +33,15 @@ class Perceptron(object):
         learned = False
         iteration = 0
         while not learned:
-            global_error = 0.0
-            for inputs, expected in zip(train_data, self.selected):
+            for inputs, expected in list(zip(train_data, self.selected)):
                 result = dot(inputs, self.weights)
                 error = expected - self.step_function(result)
                 self.weights += self.eta * error * inputs
-                global_error += abs(error)
+                self.errors.append(error)
             iteration += 1
-            if global_error == 0 or iteration >= self.n:
+            if iteration >= self.n:
                 learned = True
+                print("iteration - {}".format(iteration))
 
     def test(self, test_data):
         for inputs in test_data:
@@ -85,6 +85,6 @@ train_data = [
 
 if __name__ == "__main__":
     # Class takes arguments in range [0-9]
-    p = Perceptron(2, 6)
+    p = Perceptron(7, 5)
     p.train(train_data)
     p.test(train_data)
