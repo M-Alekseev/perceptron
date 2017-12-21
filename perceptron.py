@@ -1,4 +1,5 @@
 from numpy import array, dot, random  # , exp
+import matplotlib.pyplot as plt
 
 
 class Perceptron(object):
@@ -12,7 +13,7 @@ class Perceptron(object):
         """
         self.weights = random.rand(10)
         self.eta = 0.003
-        self.n = 10000
+        self.n = 2000
         self.errors = []
         self.selected = random.randint(1, size=10)
         # check if agrs fit the size of the weights
@@ -36,8 +37,8 @@ class Perceptron(object):
             for inputs, expected in list(zip(train_data, self.selected)):
                 result = dot(inputs, self.weights)
                 error = expected - self.step_function(result)
-                self.weights += self.eta * error * inputs
                 self.errors.append(error)
+                self.weights += self.eta * error * inputs
             iteration += 1
             if iteration >= self.n:
                 learned = True
@@ -49,6 +50,13 @@ class Perceptron(object):
             print("{}: {} -> {}".format(inputs[1:],
                                         result,
                                         self.step_function(result)))
+
+    def plot_errors(self):
+        plt.ylim([-1, 1])
+        plt.xlim([0, 2500])
+        plt.plot(self.errors)
+        plt.show()
+
 
 """
     Each array in the list represents a 3x3 pixel image
@@ -91,3 +99,5 @@ if __name__ == "__main__":
     p = Perceptron(8, 9)
     p.train(train_data)
     p.test(train_data)
+
+    p.plot_errors()
